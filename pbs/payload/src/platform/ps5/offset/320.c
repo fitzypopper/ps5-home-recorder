@@ -1,0 +1,66 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+#include "platform/ps5/offset/profile.h"
+
+static const pbs_ps5_request_initializer pbs_ps5_initializers_320[] = {
+  { .offset = 0x0u, .size = 0x2u, .bytes = { 0x18, 0x02 } },
+  { .offset = 0x8u, .size = 0x1u, .bytes = { 0x28 } },
+  { .offset = 0x30u, .size = 0x1u, .bytes = { 0x30 } },
+  { .offset = 0x38u, .size = 0x1u, .bytes = { 0x18 } },
+  { .offset = 0x40u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0x48u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0x50u, .size = 0x1u, .bytes = { 0x10 } },
+  { .offset = 0x58u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0x5cu, .size = 0x1u, .bytes = { 0x09 } },
+  { .offset = 0x60u, .size = 0x1u, .bytes = { 0x18 } },
+  { .offset = 0x70u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0x78u, .size = 0x1u, .bytes = { 0x68 } },
+  { .offset = 0x80u, .size = 0x1u, .bytes = { 0x20 } },
+  { .offset = 0x94u, .size = 0x1u, .bytes = { 0x23 } },
+  { .offset = 0x98u, .size = 0x1u, .bytes = { 0x33 } },
+  { .offset = 0xa0u, .size = 0x1u, .bytes = { 0x18 } },
+  { .offset = 0xa8u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0xb8u, .size = 0x1u, .bytes = { 0x10 } },
+  { .offset = 0xc0u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0xc8u, .size = 0x1u, .bytes = { 0x18 } },
+  { .offset = 0xd0u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0xd4u, .size = 0x1u, .bytes = { 0x19 } },
+  { .offset = 0xe0u, .size = 0x1u, .bytes = { 0x50 } },
+  { .offset = 0xe8u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0x130u, .size = 0x1u, .bytes = { 0xe8 } },
+  { .offset = 0x138u, .size = 0x1u, .bytes = { 0x40 } },
+  { .offset = 0x178u, .size = 0x1u, .bytes = { 0x88 } },
+  { .offset = 0x208u, .size = 0x1u, .bytes = { 0x10 } },
+  { .offset = 0x210u, .size = 0x1u, .bytes = { 0x01 } },
+  { .offset = 0x214u, .size = 0x1u, .bytes = { 0x01 } },
+};
+
+const pbs_ps5_offset_profile pbs_ps5_offsets_320 = {
+  .firmware = 0x03200004u,
+  .avcap2 = {
+    .open_video_rva = 0x360u,
+    .ipc_command_instruction_rva = 0x3b45u,
+    .request_size = 0x218u,
+    .kind_offset = 0xe8u,
+  },
+  .remoteplay = {
+    .request_size_store_rva = 0x1af429u,
+    .rate = {
+      .offset = 0x78u,
+      .size = 0x68u,
+      .descriptor_size = 0x20u,
+    },
+    .image = {
+      .offset = 0x130u,
+      .size = 0xe8u,
+      .descriptor_size = 0x40u,
+    },
+    .width_offset = 0x150u,
+    .height_offset = 0x154u,
+    .paste_offset = 0x178u,
+    .video_mode_offset = 0x200u,
+    .mask_mode_offset = 0x204u,
+    .mask_span = 0x14u,
+    .initializers = pbs_ps5_initializers_320,
+    .initializer_count = 0x1eu,
+  },
+};
