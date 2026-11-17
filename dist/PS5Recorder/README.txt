@@ -1,9 +1,9 @@
 PS5 Home Screen Recorder
 ========================
-Launches the PBS hardware H.264 encoder. Stream: http://192.168.1.136:9999/
+Launches the PBS hardware H.264 encoder. Stream: http://<PS5-IP>:9999/
 
 To save a video on this console:
-  1. Open http://192.168.1.136:9999/ in a browser on your network.
+  1. Open http://<PS5-IP>:9999/ in a browser on your network.
   2. Click Record, then Stop.
   3. The .h264 file lands in /data/pbs/recordings/ on this console.
   4. Copy it via FTP (port 1337) and remux with ffmpeg, or run

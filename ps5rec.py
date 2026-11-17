@@ -70,7 +70,8 @@ def env_value(key, default=None):
 
 
 def host():
-    return env_value("PS5_HOST", "192.168.1.136")
+    """Console address from --host, env, or .env. None until configured."""
+    return env_value("PS5_HOST")
 
 
 # --------------------------------------------------------------------------- http
@@ -415,6 +416,9 @@ def main():
     remuxing.add_argument("--audio", help="raw f32le stereo 48 kHz audio file to mux in")
     args = parser.parse_args()
 
+    if args.command in ("status", "load", "record", "stream") and not args.host:
+        raise SystemExit("no console address set: run ./configure.sh <ip>, "
+                         "or pass --host <ip>")
     if args.seconds and args.command not in ("record", "stream"):
         parser.error("--seconds only applies to record/stream")
     if shutil.which("ffmpeg") is None:

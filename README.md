@@ -5,12 +5,23 @@ default, up to 60 fps**, with no Remote Play and no capture card. It uses the
 console's own Avcap2 hardware H.264 encoder via the
 [PBS payload](https://github.com/seregonwar/PBS-Payload).
 
-Console: `192.168.1.136`, firmware **13.40**, jailbroken (etaHEN + kstuff).
+Tested on firmware **13.40**, jailbroken (etaHEN + kstuff).
+
+## Setup (one command)
+
+Tell the scripts your PS5's address — this writes the gitignored `.env`:
+
+```bash
+./configure.sh 192.168.1.50      # or just: ./configure.sh  (it will ask)
+```
+
+You can also set it yourself: `cp .env.example .env` and edit `PS5_HOST`, or
+pass `--host <ip>` to any `ps5rec.py` command. Nothing else needs editing.
 
 ## How it works
 
 The PBS payload runs on the console and exposes the live feed at
-`http://192.168.1.136:9999/`. It can write an **H.264 video file to the console's
+`http://<PS5-IP>:9999/`. It can write an **H.264 video file to the console's
 own disk** at `/data/pbs/recordings/`. `ps5rec.py` starts/stops that recording,
 captures the console's audio at the same time (`/audio`, 48 kHz stereo float32),
 downloads the video, and muxes both into an MP4 on your PC.
@@ -54,6 +65,8 @@ The console file is raw H.264 (video only), not MP4. To play it directly, remux:
 ```bash
 cd ~/Projects/ps5-home-recorder
 
+# one-time setup (skip if already done): ./configure.sh <your-ps5-ip>
+
 # one-time per console boot: start the payload (ELF loader on port 9021)
 python3 ps5rec.py load
 python3 ps5rec.py status                 # confirm 1920x1080 @ ~60fps
@@ -82,7 +95,7 @@ download; `--keep-raw` keeps the raw video and audio locally. Global flags go
 before the command: `--fps N` (`0` = native 60), `--seconds N`, `--crf N`,
 `--no-audio` (video only). `remux` accepts `--audio FILE` for a raw f32le file.
 
-You can also use the built-in web UI: open `http://192.168.1.136:9999/`, click
+You can also use the built-in web UI: open `http://<PS5-IP>:9999/`, click
 **Record**, then **Stop** — the `.h264` lands in `/data/pbs/recordings/`.
 
 ## Installed homebrew package
@@ -118,10 +131,10 @@ Rebuild with `./build-payload.sh` if you need to regenerate it.
 ## Logs
 
 - `/data/pbs/inject.txt` — PBS capture log (profile, OpenVideo result, errors).
-- Kernel log: `nc 192.168.1.136 3232` — shows `payload.elf calls exit()` and
+- Kernel log: `nc <PS5-IP> 3232` — shows `payload.elf calls exit()` and
   app crash reports (`notifyAppCrash`, `SCE_SHELL_UTIL_ERROR_APPLICATION_CRASH`).
 - `/data/etaHEN/experimental-utility.log` and `experimental-daemon.log` — etaHEN.
-- ShadowMount+ library UI: `http://192.168.1.136:10101/`.
+- ShadowMount+ library UI: `http://<PS5-IP>:10101/`.
 
 ## Security / notes
 

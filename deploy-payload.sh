@@ -2,7 +2,9 @@
 # Deploy the homebrew payload package to /data/homebrew/PS5Recorder via FTP.
 set -euo pipefail
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-PS5=${PS5_HOST:-192.168.1.136}
+if [[ -f $ROOT/.env ]]; then set -a; . "$ROOT/.env"; set +a; fi
+PS5=${PS5_HOST:-}
+if [[ -z $PS5 ]]; then echo "no console address: run ./configure.sh <ip>" >&2; exit 1; fi
 SRC=$ROOT/dist/PS5Recorder
 DST=/data/homebrew/PS5Recorder
 python3 - "$PS5" "$SRC" "$DST" <<'PY'
